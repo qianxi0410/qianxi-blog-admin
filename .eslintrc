@@ -8,7 +8,7 @@
     "eslint:recommended",
     "plugin:vue/essential",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -19,7 +19,7 @@
     "parser": "@typescript-eslint/parser",
     "sourceType": "module"
   },
-  "plugins": ["vue", "@typescript-eslint"],
+  "plugins": ["vue", "@typescript-eslint", "prettier"],
   "rules": {
     "eqeqeq": "error"
   }
