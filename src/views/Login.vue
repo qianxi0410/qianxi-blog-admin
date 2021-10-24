@@ -1,17 +1,26 @@
 <template>
-  <hello-world />
+  <v-app>
+    <v-main>
+      <LoginForm />
+    </v-main>
+  </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Vue, Component } from 'vue-property-decorator';
 
-import HelloWorld from '../components/HelloWorld.vue';
+import LoginForm from '../components/LoginForm/index.vue';
 
-export default Vue.extend({
-  name: 'Home',
-
+@Component({
   components: {
-    HelloWorld,
+    LoginForm,
   },
-});
+})
+export default class Login extends Vue {}
 </script>
+
+<style>
+::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+</style>

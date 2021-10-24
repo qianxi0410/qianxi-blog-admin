@@ -9,7 +9,6 @@
           height="200"
         />
       </v-col>
-
       {{ msg }}
     </v-row>
   </v-container>
