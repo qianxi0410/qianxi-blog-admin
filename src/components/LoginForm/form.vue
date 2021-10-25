@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" class="pa-4">
     <v-text-field
       outlined
-      v-model="user.username"
+      v-model="userInfo.username"
       :rules="[rules.required, rules.max]"
       hint="Characters <= 16"
       label="Username"
@@ -11,7 +11,7 @@
     </v-text-field>
     <v-text-field
       outlined
-      v-model="user.password"
+      v-model="userInfo.password"
       :append-icon="isPassword ? 'mdi-eye-off' : 'mdi-eye'"
       :rules="[rules.required, rules.min, rules.max]"
       :type="isPassword ? 'password' : 'text'"
@@ -29,13 +29,18 @@
 </template>
 
 <script lang="ts">
+import { UserInfo } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
+
+import { namespace } from 'vuex-class';
+
+const user = namespace('user');
 
 @Component
 export default class Form extends Vue {
   valid = false;
 
-  user = {
+  userInfo = {
     username: '',
     password: '',
   };
@@ -48,8 +53,15 @@ export default class Form extends Vue {
     max: (v: string) => v.length <= 16 || 'Max 16 characters',
   };
 
-  login(): void {
-    console.log(this.user);
+  // eslint-disable-next-line no-unused-vars
+  @user.Action('login') _login!: (_: UserInfo) => Promise<null>;
+
+  @user.Getter('TOKEN') token!: string;
+
+  login() {
+    this._login(this.userInfo).then((res) => {
+      console.log(res);
+    });
   }
 }
 </script>
