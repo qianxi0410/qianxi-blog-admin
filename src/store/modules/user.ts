@@ -23,7 +23,7 @@ class User extends VuexModule {
       login({ username: username.trim(), password: password.trim() })
         .then((response) => {
           const { data: res } = response;
-          this.context.commit('SET_TOKEN', res.data);
+          this.context.commit('SET_TOKEN', (res.data as any).token);
           setToken(res.data);
           resolve(null);
         })
