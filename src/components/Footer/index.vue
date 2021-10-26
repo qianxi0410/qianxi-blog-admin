@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="primary">
+  <v-footer app color="primary">
     <v-col class="text-center" cols="12">
       2021 - {{ new Date().getFullYear() }} <strong>@qianxi</strong>
     </v-col>

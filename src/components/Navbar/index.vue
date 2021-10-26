@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar color="primary" dark>
-    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+  <v-app-bar color="primary" dark app>
+    <v-app-bar-nav-icon @click="setMini(!mini)"></v-app-bar-nav-icon>
 
     <v-toolbar-title>千禧's Blog</v-toolbar-title>
 
@@ -22,8 +22,15 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
+import { namespace } from 'vuex-class';
+
+const system = namespace('system');
+
 @Component
 export default class Navbar extends Vue {
-  drawer = false;
+  @system.Getter('MINI') mini!: () => boolean;
+
+  // eslint-disable-next-line no-unused-vars
+  @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
 }
 </script>
