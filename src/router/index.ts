@@ -21,6 +21,16 @@ const routes: Array<RouteConfig> = [
       import(
         /* webpackChunckName: "dashboard" */ '../views/Dashboard/index.vue'
       ),
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () =>
+          import(
+            /* webpackChunckName: "dashboard" */ '../views/Home/index.vue'
+          ),
+      },
+    ],
   },
 ];
 

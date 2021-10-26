@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Blog from './modules/blog';
 import System from './modules/system';
 import User from './modules/user';
 
@@ -12,5 +13,6 @@ export default new Vuex.Store({
   modules: {
     user: User,
     system: System,
+    blog: Blog,
   },
 });

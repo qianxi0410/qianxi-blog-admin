@@ -4,10 +4,10 @@
     <Navbar />
     <!-- sidebar -->
     <Sidebar />
-    <v-main>
-      <div style="height: 100px">
-        <h1 v-for="i in 40" :key="i">main</h1>
-      </div>
+    <v-main class="color">
+      <transition>
+        <router-view />
+      </transition>
     </v-main>
   </v-app>
 </template>
@@ -28,3 +28,9 @@ import Sidebar from '../../components/Sidebar/index.vue';
 })
 export default class Dashboard extends Vue {}
 </script>
+
+<style scoped>
+.color {
+  background-color: rgb(236, 231, 231);
+}
+</style>
