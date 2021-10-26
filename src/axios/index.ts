@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import store from '../store';
 import { getToken } from '@/utils/auth';
-import { Response } from '@/types';
 import { baseUrl, tokenName } from '@/config';
 
 // create an axios instance
