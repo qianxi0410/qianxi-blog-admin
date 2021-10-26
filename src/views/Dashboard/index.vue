@@ -4,9 +4,9 @@
     <Navbar />
     <!-- sidebar -->
     <v-main>
-      <div style="height: 10000px"></div>
+      <div style="height: 1000px"></div>
     </v-main>
-    <!-- footer -->
+    <Footer />
   </v-app>
 </template>
 
@@ -14,10 +14,12 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 import Navbar from '../../components/Navbar/index.vue';
+import Footer from '../../components/Footer/index.vue';
 
 @Component({
   components: {
     Navbar,
+    Footer,
   },
 })
 export default class Dashboard extends Vue {}

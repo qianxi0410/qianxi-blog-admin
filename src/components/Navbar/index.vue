@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="primary" dark flat>
+  <v-app-bar color="primary" dark>
     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
     <v-toolbar-title>千禧's Blog</v-toolbar-title>
