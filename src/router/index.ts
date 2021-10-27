@@ -30,6 +30,14 @@ const routes: Array<RouteConfig> = [
             /* webpackChunckName: "dashboard" */ '../views/Home/index.vue'
           ),
       },
+      {
+        path: '/blogs',
+        name: 'Blogs',
+        component: () =>
+          import(
+            /* webpackChunckName: "dashboard" */ '../views/Blogs/index.vue'
+          ),
+      },
     ],
   },
 ];
