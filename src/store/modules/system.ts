@@ -1,4 +1,5 @@
-import { VuexModule, Module, Mutation } from 'vuex-module-decorators';
+import { weekVisitTrending } from '@/api/blog';
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 
 @Module({ namespaced: true })
 class System extends VuexModule {
@@ -12,6 +13,21 @@ class System extends VuexModule {
 
   get MINI(): boolean {
     return this._mini;
+  }
+
+  // 一周访问计数
+  @Action
+  public weekVisitTrending(): Promise<Array<number>> {
+    return new Promise((resolve, reject) => {
+      weekVisitTrending()
+        .then((response) => {
+          const { data: res } = response;
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 }
 

@@ -9,3 +9,11 @@ export function counts() {
     method: 'GET',
   }) as AxiosPromise<Response<Array<number>>>;
 }
+
+// 一周访问计数
+export function weekVisitTrending() {
+  return request({
+    url: `/blog/weekvisit`,
+    method: 'GET',
+  }) as AxiosPromise<Response<Array<number>>>;
+}

@@ -25,9 +25,22 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
+import { namespace } from 'vuex-class';
+
+const system = namespace('system');
+
 @Component
 export default class Chart extends Vue {
-  //   TODO: action
-  value = [0, 0, 5, 9, 5, 10, 3];
+  value: number[] = [];
+
+  @system.Action('weekVisitTrending') weekVisitTrending!: () => Promise<
+    Array<number>
+  >;
+
+  mounted(): void {
+    this.weekVisitTrending().then((res) => {
+      this.value = res;
+    });
+  }
 }
 </script>
