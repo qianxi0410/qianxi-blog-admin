@@ -36,7 +36,7 @@ const system = namespace('system');
 export default class Sidebar extends Vue {
   items = [
     { title: 'Home', icon: 'mdi-home-city', path: '/home' },
-    { title: 'User', icon: 'mdi-account', path: '/user' },
+    { title: 'System', icon: 'mdi-account', path: '/system' },
     { title: 'Blogs', icon: 'mdi-post', path: '/blogs' },
     { title: 'Comments', icon: 'mdi-comment', path: '/comments' },
   ];

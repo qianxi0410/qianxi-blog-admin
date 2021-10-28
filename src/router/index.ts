@@ -31,6 +31,14 @@ const routes: Array<RouteConfig> = [
           ),
       },
       {
+        path: '/system',
+        name: 'System',
+        component: () =>
+          import(
+            /* webpackChunckName: "dashboard" */ '../views/System/index.vue'
+          ),
+      },
+      {
         path: '/blogs',
         name: 'Blogs',
         component: () =>
