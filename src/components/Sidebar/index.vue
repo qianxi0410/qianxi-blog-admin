@@ -38,6 +38,7 @@ export default class Sidebar extends Vue {
     { title: 'Home', icon: 'mdi-home-city', path: '/home' },
     { title: 'User', icon: 'mdi-account', path: '/user' },
     { title: 'Blogs', icon: 'mdi-post', path: '/blogs' },
+    { title: 'Comments', icon: 'mdi-comment', path: '/comments' },
   ];
 
   @system.Getter('MINI') mini!: () => boolean;

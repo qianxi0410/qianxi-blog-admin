@@ -38,6 +38,14 @@ const routes: Array<RouteConfig> = [
             /* webpackChunckName: "dashboard" */ '../views/Blogs/index.vue'
           ),
       },
+      {
+        path: '/comments',
+        name: 'Comments',
+        component: () =>
+          import(
+            /* webpackChunckName: "dashboard" */ '../views/Comments/index.vue'
+          ),
+      },
     ],
   },
 ];
