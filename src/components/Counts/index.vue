@@ -1,12 +1,19 @@
 <template>
   <v-row class="pa-8">
     <v-col cols="3" v-for="i in 4" :key="i">
-      <v-card elevation="3" dark :color="colors[i - 1]">
-        <v-card-text>
-          <p class="text-h4">{{ counts[i - 1] }}</p>
-          <span>{{ names[i - 1] }}</span>
-        </v-card-text>
-      </v-card>
+      <v-hover v-slot="{ hover }">
+        <v-card :elevation="hover ? 10 : 3" dark :color="colors[i - 1]">
+          <v-card-text>
+            <p class="text-h4">{{ counts[i - 1] }}</p>
+            <span>{{ names[i - 1] }}</span>
+          </v-card-text>
+          <v-fade-transition>
+            <v-overlay v-if="hover" absolute color="#036358">
+              <v-btn rounded plain>See more info</v-btn>
+            </v-overlay>
+          </v-fade-transition>
+        </v-card>
+      </v-hover>
     </v-col>
   </v-row>
 </template>

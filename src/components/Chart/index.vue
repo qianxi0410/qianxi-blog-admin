@@ -3,8 +3,11 @@
     <v-col>
       <v-card elevation="3" dark color="#26A69A" flat>
         <v-card-text class="justify-center"
-          ><span class="text-h5">周访问趋势</span></v-card-text
+          ><v-icon class="mr-3 mt-n2">mdi-eye</v-icon
+          ><span class="text-h6">周访问趋势</span></v-card-text
         >
+
+        <v-divider></v-divider>
         <v-sparkline
           line-width="2"
           type="trend"
