@@ -1,13 +1,15 @@
 <template>
   <v-row class="pa-8">
     <v-col cols="6">
-      <v-textarea
-        height="520px"
-        outlined
-        counter
-        label="Please input your content"
-        value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
-      ></v-textarea>
+      <v-tabs background-color="#ECE7E7" class="mt-n3">
+        <v-tab @click="componentName = 'Content'">Content</v-tab>
+        <v-tab @click="componentName = 'File'">File</v-tab>
+      </v-tabs>
+      <transition name="slide-x-transition" mode="out-in">
+        <keep-alive>
+          <component :is="componentName" />
+        </keep-alive>
+      </transition>
     </v-col>
     <v-spacer />
     <v-col cols="5">
@@ -67,6 +69,16 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
-@Component
-export default class EditForm extends Vue {}
+import Content from './Content.vue';
+import File from './File.vue';
+
+@Component({
+  components: {
+    Content,
+    File,
+  },
+})
+export default class EditForm extends Vue {
+  componentName = 'Content';
+}
 </script>
