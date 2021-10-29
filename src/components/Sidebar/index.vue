@@ -6,26 +6,28 @@
     permanent
     dark
   >
-    <v-list>
-      <v-list-item
-        v-for="item in items"
-        :key="item.title"
-        @click="link(item.path)"
-      >
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+    <v-list shaped>
+      <v-list-item-group>
+        <v-list-item
+          active-class="active"
+          v-for="item in items"
+          :key="item.title"
+          :to="item.path"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts">
-import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 
 import { namespace } from 'vuex-class';
@@ -46,9 +48,11 @@ export default class Sidebar extends Vue {
 
   // eslint-disable-next-line no-unused-vars
   @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
-
-  link(path: string): void {
-    router.push({ path: path });
-  }
 }
 </script>
+
+<style scoped>
+.active {
+  color: red;
+}
+</style>

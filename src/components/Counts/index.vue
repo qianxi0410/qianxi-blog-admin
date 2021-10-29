@@ -8,8 +8,8 @@
             <span>{{ names[i - 1] }}</span>
           </v-card-text>
           <v-fade-transition>
-            <v-overlay v-if="hover" absolute color="#036358">
-              <v-btn rounded plain>See more info</v-btn>
+            <v-overlay v-if="hover && i <= 2" absolute color="#036358">
+              <v-btn @click="detail(i)" rounded plain>See more info</v-btn>
             </v-overlay>
           </v-fade-transition>
         </v-card>
@@ -32,6 +32,19 @@ export default class Counts extends Vue {
   colors: string[] = ['#17A2B8', '#28A745', '#FFC107', '#F4BAC6'];
 
   @blog.Action('getCounts') getCounts!: () => Promise<Array<number>>;
+
+  detail(idx: number): void {
+    switch (idx) {
+      case 1:
+        this.$router.push({ path: '/blogs' });
+        break;
+      case 2:
+        this.$router.push({ path: '/comments' });
+        break;
+      default:
+        console.log('err');
+    }
+  }
 
   mounted(): void {
     this.getCounts().then((res) => {
