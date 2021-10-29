@@ -2,16 +2,15 @@
   <v-navigation-drawer
     src="https://w.wallhaven.cc/full/k7/wallhaven-k7l81m.jpg"
     app
-    :mini-variant.sync="mini"
+    :mini-variant="mini"
     permanent
     dark
   >
     <v-list>
       <v-list-item
-        :href="item.path"
         v-for="item in items"
         :key="item.title"
-        link
+        @click="link(item.path)"
       >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
@@ -26,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router';
 import { Vue, Component } from 'vue-property-decorator';
 
 import { namespace } from 'vuex-class';
@@ -46,11 +46,9 @@ export default class Sidebar extends Vue {
 
   // eslint-disable-next-line no-unused-vars
   @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
+
+  link(path: string): void {
+    router.push({ path: path });
+  }
 }
 </script>
-
-<style lang="scss" scoped>
-.c {
-  color: #f5deb3;
-}
-</style>
