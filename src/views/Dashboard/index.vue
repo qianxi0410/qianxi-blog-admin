@@ -5,7 +5,7 @@
     <!-- sidebar -->
     <Sidebar />
     <v-main class="color">
-      <transition>
+      <transition name="slide-x-transition" mode="out-in">
         <router-view />
       </transition>
     </v-main>
