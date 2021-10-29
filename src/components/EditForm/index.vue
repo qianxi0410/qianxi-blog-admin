@@ -20,13 +20,13 @@
           required
         ></v-text-field>
 
-        <v-textarea
+        <v-text-field
           v-model="description"
           :counter="10"
           :rules="nameRules"
           label="Description"
           required
-        ></v-textarea>
+        ></v-text-field>
 
         <v-text-field
           v-model="url"
@@ -34,6 +34,13 @@
           label="Url"
           required
         ></v-text-field>
+
+        <v-switch
+          label="Blur"
+          color="primary"
+          value
+          input-value="true"
+        ></v-switch>
 
         <v-text-field
           v-model="url"
@@ -43,9 +50,10 @@
         ></v-text-field>
 
         <v-btn
-          class="justify-end"
+          block
+          class="justify-end mt-12"
           :disabled="!valid"
-          color="success"
+          color="primary"
           plain
           @click="validate"
         >
