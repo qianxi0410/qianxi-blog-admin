@@ -54,6 +54,14 @@ const routes: Array<RouteConfig> = [
             /* webpackChunckName: "dashboard" */ '../views/Comments/index.vue'
           ),
       },
+      {
+        path: '/edit',
+        name: 'Edit',
+        component: () =>
+          import(
+            /* webpackChunckName: "dashboard" */ '../views/Edit/index.vue'
+          ),
+      },
     ],
   },
 ];

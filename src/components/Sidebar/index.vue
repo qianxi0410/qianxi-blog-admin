@@ -39,6 +39,7 @@ export default class Sidebar extends Vue {
     { title: 'System', icon: 'mdi-account', path: '/system' },
     { title: 'Blogs', icon: 'mdi-post', path: '/blogs' },
     { title: 'Comments', icon: 'mdi-comment', path: '/comments' },
+    { title: 'Edit', icon: 'mdi-pencil', path: '/edit' },
   ];
 
   @system.Getter('MINI') mini!: () => boolean;
