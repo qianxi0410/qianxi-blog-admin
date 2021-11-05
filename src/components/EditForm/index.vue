@@ -37,7 +37,21 @@
           required
         ></v-text-field>
 
-        <v-parallax v-if="url !== ''" height="200" :src="url"></v-parallax>
+        <v-scroll-x-reverse-transition mode="out-in">
+          <template>
+            <v-skeleton-loader
+              v-if="url !== '' && !imgShow"
+              class="mx-auto"
+              max-height="200"
+              type="image"
+            ></v-skeleton-loader>
+            <v-parallax
+              v-else-if="imgShow"
+              height="200"
+              :src="url"
+            ></v-parallax>
+          </template>
+        </v-scroll-x-reverse-transition>
 
         <v-switch
           label="Blur"
@@ -69,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 
 import Content from './Content.vue';
 import File from './File.vue';
@@ -83,5 +97,17 @@ import File from './File.vue';
 export default class EditForm extends Vue {
   componentName = 'Content';
   url = '';
+
+  imgShow = false;
+
+  @Watch('url')
+  load(): void {
+    this.imgShow = false;
+    const img = new Image();
+    img.src = this.url;
+    img.onload = () => {
+      this.imgShow = true;
+    };
+  }
 }
 </script>
