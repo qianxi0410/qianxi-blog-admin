@@ -21,6 +21,7 @@ const routes: Array<RouteConfig> = [
       import(
         /* webpackChunckName: "dashboard" */ '../views/Dashboard/index.vue'
       ),
+    redirect: '/home',
     children: [
       {
         path: '/home',
