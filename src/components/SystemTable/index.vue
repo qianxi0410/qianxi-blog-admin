@@ -1,34 +1,98 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    :items-per-page="10"
-    class="elevation-3"
-    :footer-props="footerProps"
-    :server-items-length="total"
-    @update:page="updatePage"
-    @update:items-per-page="updateItemsPerPage"
-    :loading="loading"
-  >
-    <template v-slot:item.fat="props">
-      <v-edit-dialog :return-value.sync="props.item.name">
-        {{ props.item.name }}
-        <template v-slot:input>
-          <v-text-field
-            v-model="props.item.name"
-            :rules="[]"
-            label="Edit"
-            single-line
-            counter
-          ></v-text-field>
+  <div>
+    <v-row class="justify-center pa-8">
+      <v-hover>
+        <template v-slot:default="{ hover }">
+          <v-avatar size="100">
+            <img :src="avatarSrc" alt="qianxi" />
+            <v-fade-transition>
+              <v-overlay v-if="hover" absolute>
+                <v-btn
+                  x-small
+                  plain
+                  small
+                  @click="avatarInputShow = !avatarInputShow"
+                  >{{ text }}</v-btn
+                >
+              </v-overlay>
+            </v-fade-transition>
+          </v-avatar>
         </template>
-      </v-edit-dialog>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-    </template>
-  </v-data-table>
+      </v-hover>
+    </v-row>
+    <v-slide-x-transition>
+      <v-row class="justify-center" v-if="avatarInputShow">
+        <v-col cols="5">
+          <v-text-field
+            v-model="avatarSrc"
+            label="Src"
+            required
+            clearable
+          ></v-text-field>
+        </v-col>
+        <v-col cols="1" class="mt-3">
+          <!-- TODO: update -->
+          <v-btn plain text> update </v-btn>
+        </v-col>
+      </v-row>
+    </v-slide-x-transition>
+
+    <v-divider />
+
+    <v-row class="pa-8">
+      <v-carousel
+        show-arrows-on-hover
+        @change="this.mottoAndImgInputShow = false"
+      >
+        <v-carousel-item
+          v-for="(item, i) in items"
+          :key="i"
+          :src="item.src"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        >
+          <v-row class="fill-height" align="center" justify="center">
+            <p @click="change(item, i)" class="text-h4 cursor">
+              {{ item.motto }}
+            </p>
+          </v-row>
+        </v-carousel-item>
+      </v-carousel>
+    </v-row>
+
+    <v-slide-x-transition>
+      <v-row class="justify-center" v-if="mottoAndImgInputShow">
+        <v-col cols="5">
+          <v-text-field
+            v-model="mottoAndImg.src"
+            label="Src"
+            required
+            clearable
+          ></v-text-field>
+        </v-col>
+        <v-col cols="1" class="mt-3">
+          <!-- TODO: update -->
+          <v-btn plain text> update </v-btn>
+        </v-col>
+      </v-row>
+    </v-slide-x-transition>
+    <v-scroll-x-reverse-transition>
+      <v-row class="justify-center" v-if="mottoAndImgInputShow">
+        <v-col cols="5">
+          <v-text-field
+            v-model="mottoAndImg.motto"
+            label="Motto"
+            required
+            clearable
+          ></v-text-field>
+        </v-col>
+        <v-col cols="1" class="mt-3">
+          <!-- TODO: update -->
+          <v-btn plain text> update </v-btn>
+        </v-col>
+      </v-row>
+    </v-scroll-x-reverse-transition>
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,122 +100,42 @@ import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class SystemTable extends Vue {
-  loading = false;
-
-  total = 10;
-
-  updatePage(curPage: number): void {
-    // TODO: pagechange
-    console.log(curPage);
-  }
-
-  updateItemsPerPage(pageCount: number): void {
-    // TODO: pagesize change
-    console.log(pageCount);
-  }
-
-  footerProps = {
-    showFirstLastPage: true,
-    firstIcon: 'mdi-arrow-collapse-left',
-    lastIcon: 'mdi-arrow-collapse-right',
-  };
-
-  headers = [
+  items = [
     {
-      text: 'key',
-      align: 'start',
-      sortable: false,
-      value: 'name',
+      src: 'https://w.wallhaven.cc/full/z8/wallhaven-z8dg9y.png',
+      motto: 'this is me',
     },
     {
-      text: 'value',
-      align: 'start',
-      sortable: false,
-      value: 'name',
-    },
-    { text: 'Actions', value: 'actions', sortable: false },
-  ];
-  desserts = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      iron: '1%',
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      iron: '1%',
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      iron: '7%',
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      iron: '8%',
-    },
-    {
-      name: 'Gingerbread',
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      iron: '16%',
-    },
-    {
-      name: 'Jelly bean',
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      iron: '0%',
-    },
-    {
-      name: 'Lollipop',
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      iron: '2%',
-    },
-    {
-      name: 'Honeycomb',
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      iron: '45%',
-    },
-    {
-      name: 'Donut',
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      iron: '22%',
-    },
-    {
-      name: 'KitKat',
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      iron: '6%',
+      src: 'https://w.wallhaven.cc/full/6o/wallhaven-6ople6.png',
+      motto: 'this is you',
     },
   ];
+
+  avatarInputShow = false;
+
+  mottoAndImgInputShow = false;
+
+  mottoAndImg = {};
+
+  avatarSrc =
+    'https://pic4.zhimg.com/v2-290954bf6af107f2b26ff72a1b593ef6_xl.jpg';
+
+  get text(): string {
+    if (!this.avatarInputShow) {
+      return 'Change';
+    }
+    return 'Close';
+  }
+
+  change(item: any, i: number) {
+    this.mottoAndImg = this.items[i];
+    this.mottoAndImgInputShow = !this.mottoAndImgInputShow;
+  }
 }
 </script>
+
+<style scoped>
+.cursor {
+  cursor: pointer;
+}
+</style>
