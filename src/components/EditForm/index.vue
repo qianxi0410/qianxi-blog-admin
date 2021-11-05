@@ -37,6 +37,8 @@
           required
         ></v-text-field>
 
+        <v-parallax v-if="url !== ''" height="200" :src="url"></v-parallax>
+
         <v-switch
           label="Blur"
           color="primary"
@@ -53,7 +55,7 @@
 
         <v-btn
           block
-          class="justify-end mt-12"
+          class="justify-end mt-3"
           :disabled="!valid"
           color="primary"
           plain
@@ -80,5 +82,6 @@ import File from './File.vue';
 })
 export default class EditForm extends Vue {
   componentName = 'Content';
+  url = '';
 }
 </script>
