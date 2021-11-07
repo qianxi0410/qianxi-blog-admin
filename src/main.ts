@@ -5,8 +5,8 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import './permission';
 
-const { mockXHR } = require('../mock');
-mockXHR();
+// const { mockXHR } = require('../mock');
+// mockXHR();
 
 Vue.config.productionTip = false;
 

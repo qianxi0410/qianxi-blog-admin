@@ -6,7 +6,7 @@ import { baseUrl, tokenName } from '@/config';
 // create an axios instance
 const service = axios.create({
   baseURL: baseUrl,
-  withCredentials: true, // send cookies when cross-domain requests
+  withCredentials: false, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
 });
 

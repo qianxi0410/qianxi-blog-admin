@@ -4,7 +4,7 @@ import request from '../axios/index';
 
 export function login(data: UserInfo) {
   return request({
-    url: `/user/login`,
+    url: `/admin/user/login`,
     method: 'POST',
     data,
   }) as AxiosPromise<Response<string>>;

@@ -14,7 +14,7 @@
     </v-avatar>
 
     <v-btn icon>
-      <v-icon>mdi-cog-outline</v-icon>
+      <v-icon @click="logout">mdi-cog-outline</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
@@ -25,6 +25,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
 const system = namespace('system');
+const user = namespace('user');
 
 @Component
 export default class Navbar extends Vue {
@@ -32,5 +33,12 @@ export default class Navbar extends Vue {
 
   // eslint-disable-next-line no-unused-vars
   @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
+
+  @user.Mutation('REMOVE_TOKEN') _logout!: () => void;
+
+  logout(): void {
+    this._logout();
+    this.$router.push({ path: '/login' });
+  }
 }
 </script>

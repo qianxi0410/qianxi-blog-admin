@@ -5,7 +5,7 @@ export interface Response<T = unknown> {
 }
 
 export interface UserInfo {
-  username: string;
+  name: string;
   password: string;
 }
 

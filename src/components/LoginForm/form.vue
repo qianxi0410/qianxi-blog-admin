@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" class="pa-4">
     <v-text-field
       outlined
-      v-model="userInfo.username"
+      v-model="userInfo.name"
       :rules="[rules.required, rules.max]"
       hint="Characters <= 16"
       label="Username"
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { UserInfo } from '@/types';
+import { Response, UserInfo } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
 
 import { namespace } from 'vuex-class';
@@ -40,8 +40,8 @@ const user = namespace('user');
 export default class Form extends Vue {
   valid = false;
 
-  userInfo = {
-    username: '',
+  userInfo: UserInfo = {
+    name: '',
     password: '',
   };
 
@@ -54,13 +54,13 @@ export default class Form extends Vue {
   };
 
   // eslint-disable-next-line no-unused-vars
-  @user.Action('login') _login!: (_: UserInfo) => Promise<null>;
-
-  @user.Getter('TOKEN') token!: string;
+  @user.Action('login') _login!: (_: UserInfo) => Promise<Response<string>>;
 
   login() {
-    this._login(this.userInfo).then((res) => {
-      console.log(res);
+    this._login(this.userInfo).then((res: Response<string>) => {
+      if (res.data) {
+        this.$router.push({ path: '/dashboard' });
+      }
     });
   }
 }

@@ -1,9 +1,9 @@
 import { NavigationGuardNext, Route } from 'vue-router';
 import router from './router';
-// import { getToken } from './utils/auth';
+import { getToken } from '@/utils/auth';
 
 router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
-  //   const token = getToken();
+  const token = getToken();
 
   //   if (token) {
   //     // have token
@@ -16,9 +16,17 @@ router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
   //     next({ path: '/login' });
   //   }
 
-  if (to.path !== '/login') {
-    next({ path: '/login' });
+  if (token) {
+    if (to.path === '/login') {
+      next({ path: '/dashboard' });
+    } else {
+      next();
+    }
   } else {
-    next();
+    if (to.path !== '/login') {
+      next({ path: '/login' });
+    } else {
+      next();
+    }
   }
 });
