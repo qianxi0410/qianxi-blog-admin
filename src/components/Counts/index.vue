@@ -4,7 +4,7 @@
       <v-hover v-slot="{ hover }">
         <v-card :elevation="hover ? 10 : 3" dark :color="colors[i - 1]">
           <v-card-text>
-            <p class="text-h4">{{ counts[i - 1] }}</p>
+            <p class="text-h4">{{ COUNTINFO[i - 1] }}</p>
             <span>{{ names[i - 1] }}</span>
           </v-card-text>
           <v-fade-transition>
@@ -27,11 +27,12 @@ const blog = namespace('blog');
 
 @Component
 export default class Counts extends Vue {
-  counts: number[] = [];
   names: string[] = ['文章数量', '评论数量', '访问次数', '访问人数'];
   colors: string[] = ['#17A2B8', '#28A745', '#FFC107', '#F4BAC6'];
 
-  @blog.Action('getCounts') getCounts!: () => Promise<Array<number>>;
+  @blog.Getter('COUNTINFO') COUNTINFO!: () => number[];
+
+  @blog.Action('getCountInfo') _getCountInfo!: () => Promise<unknown>;
 
   detail(idx: number): void {
     switch (idx) {
@@ -47,9 +48,7 @@ export default class Counts extends Vue {
   }
 
   mounted(): void {
-    this.getCounts().then((res) => {
-      this.counts = res;
-    });
+    this._getCountInfo();
   }
 }
 </script>

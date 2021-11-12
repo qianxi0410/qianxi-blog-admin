@@ -9,17 +9,27 @@ export interface UserInfo {
   password: string;
 }
 
-export interface Blog {
+export interface NullString {
+  String: string;
+  Valid: boolean;
+}
+
+export interface NullBoolean {
+  Boolean: boolean;
+  Valid: boolean;
+}
+
+export interface Post {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
   title: string;
-  description: string;
+  description: NullString;
   pre: number;
   next: number;
   url: string;
   path: string;
-  tags: string;
+  tags: NullString;
 }
 
 export interface Comment {
@@ -31,4 +41,9 @@ export interface Comment {
   name: string;
   avatar: string;
   postId: number;
+}
+
+export interface PageQuery {
+  page: number;
+  size: number;
 }

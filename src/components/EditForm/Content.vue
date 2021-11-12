@@ -5,13 +5,15 @@
     outlined
     counter
     label="Please input your content"
-    value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+    v-model="_content"
   ></v-textarea>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, PropSync } from 'vue-property-decorator';
 
 @Component
-export default class Content extends Vue {}
+export default class Content extends Vue {
+  @PropSync('content', { type: String }) readonly _content!: string;
+}
 </script>

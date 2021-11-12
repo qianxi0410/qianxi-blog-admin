@@ -21,6 +21,8 @@
   },
   "plugins": ["vue", "@typescript-eslint", "prettier"],
   "rules": {
-    "eqeqeq": "error"
+    "eqeqeq": "error",
+    "vue/valid-v-slot": "warn",
+    "vue/valid-v-model": "off"
   }
 }
