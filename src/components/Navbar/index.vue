@@ -11,7 +11,7 @@
     </v-avatar>
 
     <v-btn icon>
-      <v-icon @click="logout">mdi-cog-outline</v-icon>
+      <v-icon @click="logout">mdi-logout</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
