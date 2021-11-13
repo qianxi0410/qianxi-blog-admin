@@ -1,53 +1,91 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
-    :items-per-page="10"
+    :items="comments"
     class="elevation-3"
     :footer-props="footerProps"
     :server-items-length="total"
     @update:page="updatePage"
     @update:items-per-page="updateItemsPerPage"
+    :items-per-page="pageQuery.size"
     :loading="loading"
   >
-    <template v-slot:item.fat="props">
-      <v-edit-dialog :return-value.sync="props.item.name">
-        {{ props.item.name }}
-        <template v-slot:input>
-          <v-text-field
-            v-model="props.item.name"
-            :rules="[]"
-            label="Edit"
-            single-line
-            counter
-          ></v-text-field>
-        </template>
-      </v-edit-dialog>
+    <template v-slot:item.created_at="{ item }">
+      {{ new Date(item.created_at).toLocaleString() }}
     </template>
+
+    <template v-slot:item.avatar="{ item }">
+      <v-avatar size="60">
+        <v-img :src="item.avatar"></v-img>
+      </v-avatar>
+    </template>
+
+    <template v-slot:item.login="{ item }">
+      <a target="_blank" style="" :href="`https://github.com/${item.login}`">{{
+        item.login
+      }}</a>
+    </template>
+
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-dialog transition="dialog-bottom-transition" max-width="290">
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon color="red" small v-bind="attrs" v-on="on">
+            mdi-delete
+          </v-icon>
+        </template>
+        <template v-slot:default="dialog">
+          <v-card>
+            <v-card-title class="text-h5"> Are your sure ? </v-card-title>
+            <v-card-text
+              >After confirming once, do you really plan to delete
+              <span style="color: red"> {{ item.name }}</span
+              >'s comment ?</v-card-text
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" text @click="dialog.value = false">
+                Disagree
+              </v-btn>
+              <v-btn
+                color="red darken-1"
+                text
+                @click="deleteItem(item, dialog)"
+              >
+                Agree
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
     </template>
   </v-data-table>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Comment, PageQuery } from '@/types';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+
+import { namespace } from 'vuex-class';
+
+const blog = namespace('blog');
 
 @Component
 export default class CommentTable extends Vue {
   loading = false;
 
-  total = 10;
+  @blog.Getter('COMMENT_COUNT') total!: number;
+
+  pageQuery: PageQuery = {
+    page: 1,
+    size: 5,
+  };
 
   updatePage(curPage: number): void {
-    // TODO: pagechange
-    console.log(curPage);
+    this.pageQuery.page = curPage;
   }
 
   updateItemsPerPage(pageCount: number): void {
-    // TODO: pagesize change
-    console.log(pageCount);
+    this.pageQuery.size = pageCount;
   }
 
   footerProps = {
@@ -58,99 +96,75 @@ export default class CommentTable extends Vue {
 
   headers = [
     {
-      text: 'name',
+      text: 'Name',
       align: 'start',
       sortable: false,
       value: 'name',
     },
-    { text: 'date', value: 'calories', sortable: false },
-    { text: 'time', value: 'calories', sortable: false },
-    { text: 'content', value: 'fat', sortable: false },
-    { text: 'avatar', value: 'carbs', sortable: false },
-    { text: 'post id', value: 'protein', sortable: false },
-    { text: 'Actions', value: 'actions', sortable: false },
-  ];
-  desserts = [
+    { text: 'Time', value: 'created_at', sortable: false },
+    { text: 'Avatar', value: 'avatar', sortable: false },
+    { text: 'Content', value: 'content', sortable: false, width: '400' },
+    { text: 'Login', value: 'login', sortable: false, cellClass: 'link' },
     {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      iron: '1%',
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      iron: '1%',
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      iron: '7%',
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      iron: '8%',
-    },
-    {
-      name: 'Gingerbread',
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      iron: '16%',
-    },
-    {
-      name: 'Jelly bean',
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      iron: '0%',
-    },
-    {
-      name: 'Lollipop',
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      iron: '2%',
-    },
-    {
-      name: 'Honeycomb',
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      iron: '45%',
-    },
-    {
-      name: 'Donut',
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      iron: '22%',
-    },
-    {
-      name: 'KitKat',
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      iron: '6%',
+      text: 'Actions',
+      value: 'actions',
+      sortable: false,
+      align: 'center',
     },
   ];
+
+  comments: Comment[] = [];
+
+  @blog.Action('getComments') _getComments!: (
+    // eslint-disable-next-line no-unused-vars
+    pageQuery: PageQuery
+  ) => Promise<Comment[]>;
+
+  @blog.Action('_deleteComment') _deleteComment!: (
+    // eslint-disable-next-line no-unused-vars
+    arr: [number, number]
+  ) => Promise<null>;
+
+  async deleteItem(item: Comment) {
+    const { id, post_id } = item;
+    console.log(id, post_id);
+
+    await this._deleteComment([id, post_id]);
+    await this.refetchComments(this.pageQuery);
+  }
+
+  @Watch('pageQuery', { deep: true, immediate: true })
+  async refetchComments(newVal: PageQuery) {
+    this.loading = true;
+    const res = await this._getComments(newVal);
+    this.comments = res;
+    this.loading = false;
+  }
 }
 </script>
+
+<style scoped>
+.link a {
+  text-decoration: none;
+  position: relative;
+  color: black;
+}
+
+.link a:after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: -0.1em;
+  right: -0.1em;
+  bottom: 0;
+  transition: top 200ms cubic-bezier(0, 0.8, 0.13, 1);
+  background-color: rgb(39, 63, 199);
+  opacity: 0.2;
+  margin-right: 0.1rem;
+  margin-left: 0.1rem;
+}
+
+.link a:hover:after {
+  top: 0%;
+}
+</style>

@@ -1,4 +1,4 @@
-import { Response } from '@/types';
+import { Comment, Response } from '@/types';
 import { AxiosPromise } from 'axios';
 import request from '../axios/index';
 import { Post } from '@/types';
@@ -113,6 +113,26 @@ export function upload(post: Post) {
       description: post.description.String,
       tags: post.tags.String,
       path: post.path,
+    },
+  }) as AxiosPromise<Response<null>>;
+}
+
+export function comments(page: number, size: number) {
+  return request({
+    url: `/admin/comment/page/${page}/size/${size}`,
+    method: 'GET',
+    headers: {
+      authorization: store.getters['user/TOKEN'],
+    },
+  }) as AxiosPromise<Response<Comment[]>>;
+}
+
+export function deleteComment(id: number, postId: number) {
+  return request({
+    url: `/admin/comment/id/${id}/postid/${postId}`,
+    method: 'DELETE',
+    headers: {
+      authorization: store.getters['user/TOKEN'],
     },
   }) as AxiosPromise<Response<null>>;
 }

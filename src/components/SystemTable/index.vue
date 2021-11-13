@@ -4,7 +4,7 @@
       <v-hover>
         <template v-slot:default="{ hover }">
           <v-avatar size="100">
-            <img :src="avatarSrc" alt="qianxi" />
+            <img :src="SYSTEM_INFO['AVATAR']" alt="qianxi" />
             <v-fade-transition>
               <v-overlay v-if="hover" absolute>
                 <v-btn
@@ -23,16 +23,26 @@
     <v-slide-x-transition>
       <v-row class="justify-center" v-if="avatarInputShow">
         <v-col cols="5">
-          <v-text-field
-            v-model="avatarSrc"
-            label="Src"
-            required
-            clearable
-          ></v-text-field>
+          <v-form v-model="valid1">
+            <v-text-field
+              v-model="SYSTEM_INFO['AVATAR']"
+              label="Src"
+              required
+              :rules="rules"
+              clearable
+            ></v-text-field>
+          </v-form>
         </v-col>
         <v-col cols="1" class="mt-3">
-          <!-- TODO: update -->
-          <v-btn plain text> update </v-btn>
+          <v-btn
+            color="primary"
+            plain
+            :disabled="!valid1"
+            text
+            @click="update('AVATAR')"
+          >
+            update
+          </v-btn>
         </v-col>
       </v-row>
     </v-slide-x-transition>
@@ -40,85 +50,112 @@
     <v-divider />
 
     <v-row class="pa-8">
-      <v-carousel
-        show-arrows-on-hover
-        @change="this.mottoAndImgInputShow = false"
-      >
-        <v-carousel-item
-          v-for="(item, i) in items"
-          :key="i"
-          :src="item.src"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        >
-          <v-row class="fill-height" align="center" justify="center">
-            <p @click="change(item, i)" class="text-h4 cursor">
-              {{ item.motto }}
-            </p>
-          </v-row>
-        </v-carousel-item>
+      <v-carousel show-arrows-on-hover>
+        <v-hover>
+          <template v-slot:default="{ hover }">
+            <div>
+              <v-carousel-item
+                v-for="(k, i) in keys"
+                :key="i"
+                :src="SYSTEM_INFO[k]"
+                reverse-transition="fade-transition"
+                transition="fade-transition"
+              >
+                <v-fade-transition>
+                  <v-overlay v-if="hover" absolute>
+                    <v-btn plain text rounded @click="handleClick(k)">{{
+                      text2
+                    }}</v-btn>
+                  </v-overlay>
+                </v-fade-transition>
+              </v-carousel-item>
+            </div>
+          </template>
+        </v-hover>
       </v-carousel>
     </v-row>
 
     <v-slide-x-transition>
-      <v-row class="justify-center" v-if="mottoAndImgInputShow">
+      <v-row class="justify-center" v-if="imgInputShow">
         <v-col cols="5">
-          <v-text-field
-            v-model="mottoAndImg.src"
-            label="Src"
-            required
-            clearable
-          ></v-text-field>
+          <v-form v-model="valid2">
+            <v-text-field
+              v-model="SYSTEM_INFO[key]"
+              label="Src"
+              required
+              clearable
+              :rules="rules"
+            ></v-text-field>
+          </v-form>
         </v-col>
         <v-col cols="1" class="mt-3">
-          <!-- TODO: update -->
-          <v-btn plain text> update </v-btn>
+          <v-btn
+            color="primary"
+            plain
+            :disabled="!valid2"
+            text
+            @click="update(key)"
+          >
+            update
+          </v-btn>
         </v-col>
       </v-row>
     </v-slide-x-transition>
-    <v-scroll-x-reverse-transition>
-      <v-row class="justify-center" v-if="mottoAndImgInputShow">
-        <v-col cols="5">
-          <v-text-field
-            v-model="mottoAndImg.motto"
-            label="Motto"
-            required
-            clearable
-          ></v-text-field>
-        </v-col>
-        <v-col cols="1" class="mt-3">
-          <!-- TODO: update -->
-          <v-btn plain text> update </v-btn>
-        </v-col>
-      </v-row>
-    </v-scroll-x-reverse-transition>
   </div>
 </template>
 
 <script lang="ts">
+import { System } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+
+const system = namespace('system');
 
 @Component
 export default class SystemTable extends Vue {
-  items = [
-    {
-      src: 'https://w.wallhaven.cc/full/z8/wallhaven-z8dg9y.png',
-      motto: 'this is me',
-    },
-    {
-      src: 'https://w.wallhaven.cc/full/6o/wallhaven-6ople6.png',
-      motto: 'this is you',
-    },
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
+
+  key = '';
+
+  valid1 = true;
+  valid2 = true;
+
+  rules = [
+    (v: string) => !!v || 'Url is required',
+    (v: string) =>
+      new RegExp(
+        'https://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
+      ).test(v) || 'Url must be https',
+  ];
+
+  keys = [
+    'BG-1-LIGHT',
+    'BG-1-DARK',
+    'BG-2-LIGHT',
+    'BG-2-DARK',
+    'BG-3-LIGHT',
+    'BG-3-DARK',
   ];
 
   avatarInputShow = false;
 
-  mottoAndImgInputShow = false;
+  imgInputShow = false;
 
-  mottoAndImg = {};
+  handleClick(k: string) {
+    this.key = k;
+    this.imgInputShow = !this.imgInputShow;
+  }
 
-  avatarSrc =
-    'https://pic4.zhimg.com/v2-290954bf6af107f2b26ff72a1b593ef6_xl.jpg';
+  @system.Action('updateSysInfo') _updateSysInfo!: (
+    // eslint-disable-next-line no-unused-vars
+    arr: [string, string]
+  ) => Promise<null>;
+
+  async update(key: string) {
+    await this._updateSysInfo([key, this.SYSTEM_INFO[key]]);
+    this.avatarInputShow = false;
+    this.imgInputShow = false;
+  }
 
   get text(): string {
     if (!this.avatarInputShow) {
@@ -127,9 +164,11 @@ export default class SystemTable extends Vue {
     return 'Close';
   }
 
-  change(item: any, i: number) {
-    this.mottoAndImg = this.items[i];
-    this.mottoAndImgInputShow = !this.mottoAndImgInputShow;
+  get text2(): string {
+    if (!this.imgInputShow) {
+      return 'Change';
+    }
+    return 'Close';
   }
 }
 </script>

@@ -34,16 +34,27 @@ export interface Post {
 
 export interface Comment {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
   content: string;
   login: string;
   name: string;
   avatar: string;
-  postId: number;
+  post_id: number;
 }
 
 export interface PageQuery {
   page: number;
   size: number;
+}
+
+export interface System {
+  [index: string]: string;
+  AVATAR: string;
+  'BG-1-LIGHT': string;
+  'BG-1-DARK': string;
+  'BG-2-LIGHT': string;
+  'BG-2-DARK': string;
+  'BG-3-LIGHT': string;
+  'BG-3-DARK': string;
 }

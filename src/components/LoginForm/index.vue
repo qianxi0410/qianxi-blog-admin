@@ -28,10 +28,7 @@
 
             <v-card-text class="center">
               <v-avatar size="80">
-                <v-img
-                  alt="qianxi"
-                  src="https://pic2.zhimg.com/v2-290954bf6af107f2b26ff72a1b593ef6_xl.jpg"
-                ></v-img>
+                <v-img alt="qianxi" :src="SYSTEM_INFO['AVATAR']"></v-img>
               </v-avatar>
             </v-card-text>
             <Form />
@@ -46,6 +43,10 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 import Form from './form.vue';
+import { namespace } from 'vuex-class';
+import { System } from '@/types';
+
+const system = namespace('system');
 
 @Component({
   components: {
@@ -57,6 +58,8 @@ export default class LoginForm extends Vue {
     width: 0,
     height: 0,
   };
+
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
 
   // 适配图像大小
   adapter(): void {

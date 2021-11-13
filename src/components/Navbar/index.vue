@@ -7,10 +7,7 @@
     <v-spacer></v-spacer>
 
     <v-avatar v-ripple class="mr-8">
-      <img
-        src="https://pic4.zhimg.com/v2-290954bf6af107f2b26ff72a1b593ef6_xl.jpg"
-        alt="qianxi"
-      />
+      <img :src="SYSTEM_INFO['AVATAR']" alt="qianxi" />
     </v-avatar>
 
     <v-btn icon>
@@ -20,6 +17,7 @@
 </template>
 
 <script lang="ts">
+import { System } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
 
 import { namespace } from 'vuex-class';
@@ -33,6 +31,8 @@ export default class Navbar extends Vue {
 
   // eslint-disable-next-line no-unused-vars
   @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
+
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
 
   @user.Mutation('REMOVE_TOKEN') _logout!: () => void;
 

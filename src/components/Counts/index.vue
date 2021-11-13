@@ -32,8 +32,6 @@ export default class Counts extends Vue {
 
   @blog.Getter('COUNTINFO') COUNTINFO!: () => number[];
 
-  @blog.Action('getCountInfo') _getCountInfo!: () => Promise<unknown>;
-
   detail(idx: number): void {
     switch (idx) {
       case 1:
@@ -45,10 +43,6 @@ export default class Counts extends Vue {
       default:
         console.log('err');
     }
-  }
-
-  mounted(): void {
-    this._getCountInfo();
   }
 }
 </script>

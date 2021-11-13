@@ -1,7 +1,9 @@
-import { PageQuery, Post } from '@/types';
+import { Comment, PageQuery, Post } from '@/types';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import {
+  comments,
   counts,
+  deleteComment,
   post,
   posts,
   update,
@@ -22,7 +24,7 @@ class Blog extends VuexModule {
     return this._countinfo[0];
   }
 
-  get COMMNET_COUNT(): number {
+  get COMMENT_COUNT(): number {
     return this._countinfo[1];
   }
 
@@ -108,6 +110,22 @@ class Blog extends VuexModule {
     });
   }
 
+  @Action
+  public _deleteComment(arr: [number, number]): Promise<null> {
+    const [id, postId] = arr;
+
+    return new Promise((resolve, reject) => {
+      deleteComment(id, postId)
+        .then(() => {
+          this.context.dispatch('getCountInfo');
+          resolve(null);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   // 是否是更新文章
   private _postId: number = -1;
 
@@ -145,6 +163,26 @@ class Blog extends VuexModule {
       upload(post)
         .then(() => {
           resolve(null);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
+  @Action
+  public getComments(pageQuery: PageQuery): Promise<Comment[]> {
+    const { page, size } = pageQuery;
+
+    return new Promise((resolve, reject) => {
+      comments(page, size)
+        .then((response) => {
+          const { data: res } = response;
+          if (res.data) {
+            resolve(res.data);
+          } else {
+            resolve([]);
+          }
         })
         .catch((err) => {
           reject(err);
