@@ -10,9 +10,6 @@ export function counts() {
   return request({
     url: `/admin/countinfo`,
     method: 'GET',
-    headers: {
-      authorization: store.getters['user/TOKEN'],
-    },
   }) as AxiosPromise<Response<number[]>>;
 }
 
@@ -20,9 +17,6 @@ export function posts(page: number, size: number) {
   return request({
     url: `/admin/post/page/${page}/size/${size}`,
     method: 'GET',
-    headers: {
-      authorization: store.getters['user/TOKEN'],
-    },
   }) as AxiosPromise<Response<Post[]>>;
 }
 
@@ -84,9 +78,6 @@ export function post(id: number) {
   return request({
     url: `/admin/post/id/${id}`,
     method: 'GET',
-    headers: {
-      authorization: store.getters['user/TOKEN'],
-    },
   }) as AxiosPromise<Response<Post>>;
 }
 
@@ -121,9 +112,6 @@ export function comments(page: number, size: number) {
   return request({
     url: `/admin/comment/page/${page}/size/${size}`,
     method: 'GET',
-    headers: {
-      authorization: store.getters['user/TOKEN'],
-    },
   }) as AxiosPromise<Response<Comment[]>>;
 }
 

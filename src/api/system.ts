@@ -9,9 +9,6 @@ export function systemInfo() {
   return request({
     url: `/admin/system`,
     method: 'GET',
-    headers: {
-      authorization: store.getters['user/TOKEN'],
-    },
   }) as AxiosPromise<Response<Map<string, string>>>;
 }
 

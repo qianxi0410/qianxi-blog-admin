@@ -1,4 +1,4 @@
-import { login } from '@/api/user';
+import { login, tokenValid } from '@/api/user';
 import { UserInfo } from '@/types';
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 import { Response } from '@/types';
@@ -33,13 +33,27 @@ class User extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public async login(userInfo: UserInfo): Promise<Response<string>> {
+  public login(userInfo: UserInfo): Promise<Response<string>> {
     const { name, password } = userInfo;
     return new Promise((resolve, reject) => {
       login({ name: name.trim(), password: password.trim() })
         .then((response) => {
           const { data: res } = response;
           this.context.commit('SET_TOKEN', res.data || '');
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
+  @Action
+  public checkTokenValid(): Promise<Response<boolean>> {
+    return new Promise((resolve, reject) => {
+      tokenValid()
+        .then((response) => {
+          const { data: res } = response;
           resolve(res);
         })
         .catch((err) => {
