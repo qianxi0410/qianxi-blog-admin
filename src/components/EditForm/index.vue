@@ -65,6 +65,7 @@
           label="Tags"
           required
           :rules="tagRules"
+          :counter="20"
         ></v-text-field>
 
         <v-btn
@@ -113,6 +114,7 @@ export default class EditForm extends Vue {
 
   tagRules = [
     (v: string) => !!v || 'Tag is required',
+    (v: string) => (v && v.length <= 30) || "Tag's length must less than 20",
     (v: string) =>
       new RegExp(
         '^[a-zA-Z0-9\u4e00-\u9fa5]+(\\-[a-zA-Z0-9\u4e00-\u9fa5]+)*$'
@@ -121,13 +123,13 @@ export default class EditForm extends Vue {
 
   titleRules = [
     (v: string) => !!v || 'Title is required',
-    (v: string) => (v && v.length <= 30) || "Title's length must less than 20",
+    (v: string) => (v && v.length <= 30) || "Title's length must less than 30",
   ];
 
   descRules = [
     (v: string) => !!v || 'Description is required',
     (v: string) =>
-      (v && v.length <= 50) || "Description's length must less than 20",
+      (v && v.length <= 50) || "Description's length must less than 50",
   ];
 
   post: Post = {

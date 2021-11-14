@@ -19,7 +19,7 @@
         <template v-slot:input>
           <v-text-field
             v-model="props.item.title"
-            :rules="[(v) => v.length <= 25 || 'Title too long!']"
+            :rules="[(v) => v.length <= 30 || 'Title too long!']"
             label="Edit"
             single-line
             counter
@@ -41,7 +41,7 @@
         <template v-slot:input>
           <v-text-field
             v-model="props.item.description.String"
-            :rules="[(v) => v.length <= 30 || 'Description too long!']"
+            :rules="[(v) => v.length <= 50 || 'Description too long!']"
             label="Edit"
             single-line
             counter
