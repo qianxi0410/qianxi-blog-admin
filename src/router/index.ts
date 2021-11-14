@@ -65,6 +65,16 @@ const routes: Array<RouteConfig> = [
       },
     ],
   },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () =>
+      import(/* webpackChunckName: "404" */ '../views/404/index.vue'),
+  },
+  {
+    path: '*',
+    redirect: '/404',
+  },
 ];
 
 const router = new VueRouter({

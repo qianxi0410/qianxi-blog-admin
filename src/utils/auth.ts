@@ -6,7 +6,7 @@ export function getToken(): string {
 }
 
 export function removeToken() {
-  return store.commit('REMOVE_TOKEN');
+  return store.commit('user/REMOVE_TOKEN');
 }
 
 export async function checkTokenValid() {

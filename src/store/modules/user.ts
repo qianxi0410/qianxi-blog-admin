@@ -54,7 +54,14 @@ class User extends VuexModule {
       tokenValid()
         .then((response) => {
           const { data: res } = response;
-          resolve(res);
+          if (response.status !== 200) {
+            resolve({
+              code: 777,
+              data: false,
+            } as Response<boolean>);
+          } else {
+            resolve(res);
+          }
         })
         .catch((err) => {
           reject(err);

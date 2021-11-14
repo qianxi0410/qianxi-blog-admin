@@ -1,14 +1,24 @@
 import { NavigationGuardNext, Route } from 'vue-router';
 import router from './router';
-import { checkTokenValid, getToken } from '@/utils/auth';
+import { checkTokenValid, getToken, removeToken } from '@/utils/auth';
 
 router.beforeEach(async (to: Route, from: Route, next: NavigationGuardNext) => {
   const token = getToken();
 
   if (token) {
-    const valid = await checkTokenValid();
+    let valid = false;
+    try {
+      valid = await checkTokenValid();
+    } catch (err) {
+      valid = false;
+    }
     if (!valid) {
-      next({ path: '/login' });
+      removeToken();
+      if (to.path === '/login') {
+        next();
+      } else {
+        next({ path: '/login' });
+      }
     }
 
     if (to.path === '/login') {
