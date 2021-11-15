@@ -57,6 +57,9 @@
           label="Blur"
           color="primary"
           value
+          v-model="post.blur"
+          :false-value="0"
+          :true-value="1"
           input-value="true"
         ></v-switch>
 
@@ -149,6 +152,7 @@ export default class EditForm extends Vue {
       Valid: false,
       String: '',
     },
+    blur: 0,
   };
 
   handleUpdate(content: string) {
@@ -213,6 +217,7 @@ export default class EditForm extends Vue {
         Valid: false,
         String: '',
       },
+      blur: 0,
     };
   }
 

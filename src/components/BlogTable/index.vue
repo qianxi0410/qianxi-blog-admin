@@ -98,6 +98,15 @@
       </v-edit-dialog>
     </template>
 
+    <template v-slot:item.blur="props">
+      <v-switch
+        :false-value="0"
+        :true-value="1"
+        v-model="props.item.blur"
+        @change="save(props.item)"
+      ></v-switch>
+    </template>
+
     <template v-slot:item.actions="{ item }">
       <v-icon color="green" small class="mr-2" @click="editItem(item)">
         mdi-pencil
@@ -216,6 +225,7 @@ export default class BlogTable extends Vue {
     },
     { text: 'Created', value: 'created_at', sortable: false },
     { text: 'Desc', value: 'description.String', sortable: false },
+    { text: 'Blur', value: 'blur', sortable: false },
     { text: 'Img', value: 'url', sortable: false },
     { text: 'Tags', value: 'tags.String', sortable: false },
     { text: 'Actions', value: 'actions', sortable: false },

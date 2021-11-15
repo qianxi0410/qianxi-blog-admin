@@ -30,6 +30,7 @@ export interface Post {
   url: string;
   path: string;
   tags: NullString;
+  blur: number;
 }
 
 export interface Comment {

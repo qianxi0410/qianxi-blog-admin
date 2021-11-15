@@ -47,6 +47,7 @@ export function update(post: Post, page: number, size: number) {
       tags: post.tags.String,
       page: page,
       size: size,
+      blur: post.blur,
     },
   });
 }
@@ -70,6 +71,7 @@ export function updateWithContent(post: Post, page: number, size: number) {
       tags: post.tags.String,
       page: page,
       size: size,
+      blur: post.blur,
     },
   });
 }
@@ -104,6 +106,7 @@ export function upload(post: Post) {
       description: post.description.String,
       tags: post.tags.String,
       path: post.path,
+      blur: post.blur,
     },
   }) as AxiosPromise<Response<null>>;
 }
