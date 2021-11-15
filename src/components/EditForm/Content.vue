@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { Vue, Component, PropSync } from 'vue-property-decorator';
-
 @Component
 export default class Content extends Vue {
   @PropSync('content', { type: String }) readonly _content!: string;

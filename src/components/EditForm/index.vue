@@ -3,7 +3,7 @@
     <v-col cols="6">
       <v-tabs background-color="#ECE7E7" class="mt-n3">
         <v-tab @click="componentName = 'Content'">Content</v-tab>
-        <v-tab @click="componentName = 'File'">File</v-tab>
+        <v-tab @click="componentName = 'Preview'">Preview</v-tab>
       </v-tabs>
       <transition name="slide-x-transition" mode="out-in">
         <keep-alive>
@@ -87,7 +87,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 
 import Content from './Content.vue';
-import File from './File.vue';
+import Preview from './Preview.vue';
 import { namespace } from 'vuex-class';
 import { PageQuery, Post } from '@/types';
 
@@ -96,7 +96,7 @@ const blog = namespace('blog');
 @Component({
   components: {
     Content,
-    File,
+    Preview,
   },
 })
 export default class EditForm extends Vue {
@@ -159,7 +159,9 @@ export default class EditForm extends Vue {
     if (this.componentName === 'Content') {
       return { content: this.post.path };
     }
-    return {};
+    return {
+      content: this.post.path,
+    };
   }
 
   imgShow = false;
