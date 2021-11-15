@@ -48,7 +48,7 @@ export interface PageQuery {
   size: number;
 }
 
-export interface System {
+export interface SystemInfo {
   [index: string]: string;
   AVATAR: string;
   'BG-1-LIGHT': string;

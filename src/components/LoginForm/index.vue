@@ -44,7 +44,7 @@ import { Vue, Component } from 'vue-property-decorator';
 
 import Form from './form.vue';
 import { namespace } from 'vuex-class';
-import { System } from '@/types';
+import { SystemInfo } from '@/types';
 
 const system = namespace('system');
 
@@ -59,7 +59,7 @@ export default class LoginForm extends Vue {
     height: 0,
   };
 
-  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: SystemInfo;
 
   // 适配图像大小
   adapter(): void {

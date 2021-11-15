@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { System } from '@/types';
+import { SystemInfo } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
 
 import { namespace } from 'vuex-class';
@@ -32,7 +32,7 @@ export default class Navbar extends Vue {
   // eslint-disable-next-line no-unused-vars
   @system.Mutation('SET_MINI') setMini!: (mini: boolean) => void;
 
-  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: SystemInfo;
 
   @user.Mutation('REMOVE_TOKEN') _logout!: () => void;
 

@@ -1,4 +1,5 @@
 import { systemInfo, updateSystemInfo } from '@/api/system';
+import { SystemInfo } from '@/types';
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 
 @Module({ namespaced: true })
@@ -25,14 +26,22 @@ class System extends VuexModule {
   }
 
   // 系统信息
-  private _systemInfo: System | undefined = undefined;
+  private _systemInfo: SystemInfo = {
+    AVATAR: '',
+    'BG-1-DARK': '',
+    'BG-1-LIGHT': '',
+    'BG-2-DARK': '',
+    'BG-2-LIGHT': '',
+    'BG-3-DARK': '',
+    'BG-3-LIGHT': '',
+  };
 
   @Mutation
-  public SET_SYSTEMINFO(m: System) {
+  public SET_SYSTEMINFO(m: SystemInfo) {
     this._systemInfo = m;
   }
 
-  get SYSTEM_INFO(): System {
+  get SYSTEM_INFO(): SystemInfo {
     return this._systemInfo!;
   }
 

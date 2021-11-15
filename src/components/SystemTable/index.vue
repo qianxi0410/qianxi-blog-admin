@@ -105,7 +105,7 @@
 </template>
 
 <script lang="ts">
-import { System } from '@/types';
+import { SystemInfo } from '@/types';
 import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
@@ -113,7 +113,7 @@ const system = namespace('system');
 
 @Component
 export default class SystemTable extends Vue {
-  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: System;
+  @system.Getter('SYSTEM_INFO') SYSTEM_INFO!: SystemInfo;
 
   key = '';
 
