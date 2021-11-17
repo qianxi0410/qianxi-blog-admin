@@ -20,14 +20,6 @@ export function posts(page: number, size: number) {
   }) as AxiosPromise<Response<Post[]>>;
 }
 
-// 一周访问计数
-export function weekVisitTrending() {
-  return request({
-    url: `/blog/weekvisit`,
-    method: 'GET',
-  }) as AxiosPromise<Response<Array<number>>>;
-}
-
 export function update(post: Post, page: number, size: number) {
   return request({
     url: `/admin/post/update`,

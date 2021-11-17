@@ -1,4 +1,4 @@
-import { systemInfo, updateSystemInfo } from '@/api/system';
+import { systemInfo, updateSystemInfo, weekVisit } from '@/api/system';
 import { SystemInfo } from '@/types';
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 
@@ -19,9 +19,15 @@ class System extends VuexModule {
   // 一周访问计数
   @Action
   public weekVisitTrending(): Promise<Array<number>> {
-    return new Promise((resolve) => {
-      // TODO:
-      resolve([]);
+    return new Promise((resolve, reject) => {
+      weekVisit()
+        .then((response) => {
+          const { data: res } = response;
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 

@@ -26,3 +26,14 @@ export function updateSystemInfo(key: string, value: string) {
     },
   });
 }
+
+// 一周访问计数
+export function weekVisit() {
+  return request({
+    url: `/admin/visit/week`,
+    method: 'GET',
+    headers: {
+      authorization: store.getters['user/TOKEN'],
+    },
+  }) as AxiosPromise<Response<Array<number>>>;
+}
