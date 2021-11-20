@@ -7,7 +7,7 @@ import store from '@/store';
 // 获取系统信息
 export function systemInfo() {
   return request({
-    url: `/admin/system`,
+    url: `/system`,
     method: 'GET',
   }) as AxiosPromise<Response<Map<string, string>>>;
 }
@@ -15,7 +15,7 @@ export function systemInfo() {
 // 更新系统信息
 export function updateSystemInfo(key: string, value: string) {
   return request({
-    url: `/admin/system/update`,
+    url: `/system/update`,
     method: 'POST',
     headers: {
       authorization: store.getters['user/TOKEN'],
@@ -30,7 +30,7 @@ export function updateSystemInfo(key: string, value: string) {
 // 一周访问计数
 export function weekVisit() {
   return request({
-    url: `/admin/visit/week`,
+    url: `/visit/week`,
     method: 'GET',
     headers: {
       authorization: store.getters['user/TOKEN'],

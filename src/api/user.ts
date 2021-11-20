@@ -5,7 +5,7 @@ import request from '../axios/index';
 
 export function login(data: UserInfo) {
   return request({
-    url: `/admin/user/login`,
+    url: `/user/login`,
     method: 'POST',
     data,
   }) as AxiosPromise<Response<string>>;
@@ -13,7 +13,7 @@ export function login(data: UserInfo) {
 
 export function tokenValid() {
   return request({
-    url: `/admin/user/tokenvalid`,
+    url: `/user/tokenvalid`,
     method: `GET`,
     headers: {
       authorization: store.getters['user/TOKEN'],

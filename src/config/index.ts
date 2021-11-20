@@ -1,3 +1,1 @@
-export const baseUrl = 'http://localhost:9999';
-
-export const tokenName = '';
+export const baseUrl = 'https://api.qianx1.xyz/admin';

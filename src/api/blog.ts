@@ -8,21 +8,21 @@ import store from '@/store';
 // 获取博文评论等的计数
 export function counts() {
   return request({
-    url: `/admin/countinfo`,
+    url: `/countinfo`,
     method: 'GET',
   }) as AxiosPromise<Response<number[]>>;
 }
 
 export function posts(page: number, size: number) {
   return request({
-    url: `/admin/post/page/${page}/size/${size}`,
+    url: `/post/page/${page}/size/${size}`,
     method: 'GET',
   }) as AxiosPromise<Response<Post[]>>;
 }
 
 export function update(post: Post, page: number, size: number) {
   return request({
-    url: `/admin/post/update`,
+    url: `/post/update`,
     method: 'POST',
     headers: {
       authorization: store.getters['user/TOKEN'],
@@ -46,7 +46,7 @@ export function update(post: Post, page: number, size: number) {
 
 export function updateWithContent(post: Post, page: number, size: number) {
   return request({
-    url: `/admin/post/update/content`,
+    url: `/post/update/content`,
     method: 'POST',
     headers: {
       authorization: store.getters['user/TOKEN'],
@@ -70,14 +70,14 @@ export function updateWithContent(post: Post, page: number, size: number) {
 
 export function post(id: number) {
   return request({
-    url: `/admin/post/id/${id}`,
+    url: `/post/id/${id}`,
     method: 'GET',
   }) as AxiosPromise<Response<Post>>;
 }
 
 export function _delete(id: number, page: number, size: number) {
   return request({
-    url: `/admin/post/id/${id}/page/${page}/size/${size}`,
+    url: `/post/id/${id}/page/${page}/size/${size}`,
     method: 'DELETE',
     headers: {
       authorization: store.getters['user/TOKEN'],
@@ -87,7 +87,7 @@ export function _delete(id: number, page: number, size: number) {
 
 export function upload(post: Post) {
   return request({
-    url: `/admin/post/insert`,
+    url: `/post/insert`,
     method: 'POST',
     headers: {
       authorization: store.getters['user/TOKEN'],
@@ -105,14 +105,14 @@ export function upload(post: Post) {
 
 export function comments(page: number, size: number) {
   return request({
-    url: `/admin/comment/page/${page}/size/${size}`,
+    url: `/comment/page/${page}/size/${size}`,
     method: 'GET',
   }) as AxiosPromise<Response<Comment[]>>;
 }
 
 export function deleteComment(id: number, postId: number) {
   return request({
-    url: `/admin/comment/id/${id}/postid/${postId}`,
+    url: `/comment/id/${id}/postid/${postId}`,
     method: 'DELETE',
     headers: {
       authorization: store.getters['user/TOKEN'],
